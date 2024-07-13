@@ -1,0 +1,8 @@
+# requirements.txt
+Flask==2.0.1
+pytesseract==0.3.8
+Pillow==8.2.0
+fuzzywuzzy==0.18.0
+scikit-learn==0.24.2
+python-Levenshtein==0.12.2
+nltk==3.6.7

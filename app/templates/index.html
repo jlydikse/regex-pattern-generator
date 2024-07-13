@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Pattern Generator</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="title">Regex Pattern Generator</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Create Pattern</a></li>
+                    <li><a href="#">Review Patterns</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="upload">
+            <h2>Upload Image</h2>
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input type="submit" value="Upload Image">
+            </form>
+        </section>
+
+        <section class="results">
+            {% if ocr_text %}
+            <h2>OCR Text</h2>
+            <pre>{{ ocr_text }}</pre>
+            {% endif %}
+
+            {% if regex_patterns %}
+            <h2>Generated Regex Patterns</h2>
+            <h3>Basic Pattern</h3>
+            <pre>{{ regex_patterns.basic_pattern }}</pre>
+            <h3>Fuzzy Pattern</h3>
+            <pre>{{ regex_patterns.fuzzy_pattern }}</pre>
+            <h3>Advanced Patterns</h3>
+            <ul>
+                {% for pattern, matches in regex_patterns.advanced_patterns.items() %}
+                <li>
+                    <h4>{{ pattern }}</h4>
+                    <pre>{{ matches }}</pre>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if clustered_patterns %}
+            <h2>Clustered Patterns</h2>
+            {% for cluster, pattern in clustered_patterns.items() %}
+            <h3>Cluster {{ cluster }}</h3>
+            <pre>{{ pattern }}</pre>
+            {% endfor %}
+            {% endif %}
+        </section>
+
+        <section id="patternGeneration">
+            <h2>Pattern Generation Area</h2>
+            <input type="text" id="inputText" placeholder="Input Text">
+            <button id="generateBtn">Generate</button>
+        </section>
+
+        <section id="patternReview">
+            <h2>Pattern Review Section</h2>
+            <p>Generated Pattern: <span id="generatedPattern"></span></p>
+            <div id="refinementTools">
+                <button>Tool 1</button>
+                <button>Tool 2</button>
+                <button>Tool 3</button>
+            </div>
+        </section>
+
+        <section id="testSection">
+            <h2>Test Section</h2>
+            <input type="text" id="testInput" placeholder="Test Input">
+            <button id="testBtn">Test</button>
+            <p>Results: <span id="testResults"></span></p>
+        </section>
+
+        <section id="errorSuggestions">
+            <h2>Suggestions</h2>
+            <button id="acceptBtn">Accept</button>
+            <button id="denyBtn">Deny</button>
+        </section>
+
+        <section id="editPatternSection">
+            <h2>Edit Pattern</h2>
+            <textarea id="patternTextarea"></textarea>
+            <button id="editPatternBtn">Edit Pattern</button>
+        </section>
+
+        <section class="errors">
+            {% if errors %}
+            <h2>Errors</h2>
+            <ul>
+                {% for error in errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+    </main>
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
