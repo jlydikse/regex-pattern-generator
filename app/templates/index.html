@@ -24,9 +24,10 @@
     <main>
         <section class="upload">
             <h2>Upload Image</h2>
-            <form method="post" enctype="multipart/form-data">
-                <input type="file" name="file">
+            <form method="post" enctype="multipart/form-data" id="uploadForm">
+                <input type="file" name="file" id="fileInput">
                 <input type="submit" value="Upload Image">
+                <input type="hidden" id="uploadedFileName" name="uploadedFileName">
             </form>
         </section>
 
@@ -43,14 +44,14 @@
             <h3>Fuzzy Pattern</h3>
             <pre>{{ regex_patterns.fuzzy_pattern }}</pre>
             <h3>Advanced Patterns</h3>
-            <ul>
+            <div id="advancedPatterns">
                 {% for pattern, matches in regex_patterns.advanced_patterns.items() %}
-                <li>
+                <div class="pattern">
                     <h4>{{ pattern }}</h4>
                     <pre>{{ matches }}</pre>
-                </li>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
             {% endif %}
 
             {% if clustered_patterns %}
@@ -87,6 +88,8 @@
 
         <section id="errorSuggestions">
             <h2>Suggestions</h2>
+            <div id="suggestedPattern"></div>
+            <input type="hidden" id="selected_regex_pattern" name="selected_regex_pattern">
             <button id="acceptBtn">Accept</button>
             <button id="denyBtn">Deny</button>
         </section>
