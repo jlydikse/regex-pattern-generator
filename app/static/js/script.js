@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const uploadedFileNameInput = document.getElementById('uploadedFileName');
     const fileInput = document.getElementById('fileInput');
     const uploadForm = document.getElementById('uploadForm');
+    const acceptCorrectionBtn = document.getElementById('acceptCorrectionBtn');
+    const denyCorrectionBtn = document.getElementById('denyCorrectionBtn');
 
     // Set the uploaded file name in the hidden input field
     fileInput.addEventListener('change', function() {
@@ -102,4 +104,46 @@ document.addEventListener('DOMContentLoaded', function() {
         const newPattern = patternTextarea.value;
         generatedPattern.textContent = newPattern;
     });
+
+    acceptCorrectionBtn.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        alert('Correction accepted');
+        saveCorrection('accepted');
+    });
+
+    denyCorrectionBtn.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        alert('Correction denied');
+        saveCorrection('denied');
+    });
+
+    function saveCorrection(status) {
+        const correctedText = document.querySelector('#correctionSuggestions pre').textContent;
+        const imageName = uploadedFileNameInput.value;
+
+
+
+        const correctionData = {
+            status: status,
+            corrected_text: correctedText,
+            image: imageName
+        };
+
+        fetch('/save_correction', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(correctionData)
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+            console.log('Correction saved:', data);
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
 });

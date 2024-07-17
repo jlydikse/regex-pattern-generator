@@ -1,0 +1,2 @@
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page 300.png Regex= [A-Z][a-z]+(\s[A-Z][a-z]+)*(\s[A-Z]\.)?, Status= accepted

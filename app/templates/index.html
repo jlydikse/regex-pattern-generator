@@ -110,6 +110,20 @@
             </ul>
             {% endif %}
         </section>
+
+        <section id="correctionSuggestions">
+            <h2>Error Corrections</h2>
+            {% if error_suggestions %}
+            <div>
+                {% for suggestion in error_suggestions %}
+                <pre>{{ suggestion[0] }} -> {{ suggestion[2] }}</pre>
+                {% endfor %}
+            </div>
+            <pre>{{ corrected_text }}</pre>
+            <button id="acceptCorrectionBtn">Accept Correction</button>
+            <button id="denyCorrectionBtn">Deny Correction</button>
+            {% endif %}
+        </section>
     </main>
 
     <script src="../static/js/script.js"></script>
