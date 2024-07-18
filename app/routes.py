@@ -5,6 +5,7 @@ from app.regex_generator import generate_regex_patterns, cluster_texts, generate
 from app.error_correction import detect_and_correct_errors
 from app.correction_suggestion import *
 import os
+import re
 
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -65,8 +66,6 @@ def save_correction():
     corrected_text = session.get('corrected_text', 'Unknown')
     image = session.get('uploaded_file_name', 'Unknown')  # Retrieve the file name from the session
 
-
-
     # Define the file path
     file_path = "C:/Users/jlydi/OneDrive/Desktop/BYU-Idaho/CSE 499 Senior Project/RegexGeneratorProject/regex-pattern-generator/app/static/correctedTexts.txt"
 
@@ -77,3 +76,45 @@ def save_correction():
     print(f'Correction saved: Image={image}, Corrected Text={corrected_text}, Status={status}')
 
     return jsonify(success=True)
+
+@app.route('/test_pattern', methods=['POST'])
+def test_pattern():
+    data = request.get_json()
+    ocr_text = data['ocr_text']
+    pattern = data['pattern']
+    
+    try:
+        compiled_pattern = re.compile(pattern)
+        matches = compiled_pattern.findall(ocr_text)
+        return jsonify({
+            'status': 'success',
+            'matches': matches
+        })
+    except re.error as e:
+        return jsonify({
+            'status': 'error',
+            'message': str(e)
+        })
+
+
+@app.route('/update_pattern_with_threshold', methods=['POST'])
+def update_pattern_with_threshold():
+    data = request.json
+    ocr_text = data.get('ocr_text')
+    threshold = data.get('threshold')
+
+    # Re-evaluate the pattern with the new threshold
+    new_patterns = generate_regex_patterns(ocr_text, threshold)
+
+    return jsonify({
+        'status': 'success',
+        'pattern': new_patterns['fuzzy_family_number_pattern']  # Or choose the specific pattern you want to return
+    })
+
+def reevaluate_pattern_with_threshold(ocr_text, threshold):
+    # Call the function to generate new patterns with the given threshold
+    new_patterns = generate_regex_patterns(ocr_text, threshold)
+    return new_patterns['fuzzy_family_number_pattern']  # Or choose the specific pattern you want to return
+
+if __name__ == '__main__':
+    app.run(debug=True)

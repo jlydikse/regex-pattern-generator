@@ -42,7 +42,7 @@
             <h3>Basic Pattern</h3>
             <pre>{{ regex_patterns.basic_pattern }}</pre>
             <h3>Fuzzy Pattern</h3>
-            <pre>{{ regex_patterns.fuzzy_pattern }}</pre>
+            <pre>{{ regex_patterns.fuzzy_family_number_pattern }}</pre>
             <h3>Advanced Patterns</h3>
             <div id="advancedPatterns">
                 {% for pattern, matches in regex_patterns.advanced_patterns.items() %}
@@ -73,9 +73,9 @@
             <h2>Pattern Review Section</h2>
             <p>Generated Pattern: <span id="generatedPattern"></span></p>
             <div id="refinementTools">
-                <button>Tool 1</button>
-                <button>Tool 2</button>
-                <button>Tool 3</button>
+              <button id="tool1Btn">Reevaluate Patterns (Threshold = 10)</button>
+              <button id="tool2Btn">Reevaluate Patterns (Threshold = 50)</button>
+              <button id="tool3Btn">Reevaluate Patterns (Threshold = 90)</button>
             </div>
         </section>
 

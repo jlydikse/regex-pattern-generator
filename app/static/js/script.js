@@ -16,8 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const uploadForm = document.getElementById('uploadForm');
     const acceptCorrectionBtn = document.getElementById('acceptCorrectionBtn');
     const denyCorrectionBtn = document.getElementById('denyCorrectionBtn');
+    const tool1Btn = document.getElementById('tool1Btn');
+    const tool2Btn = document.getElementById('tool2Btn');
+    const tool3Btn = document.getElementById('tool3Btn');
 
-    // Set the uploaded file name in the hidden input field
     fileInput.addEventListener('change', function() {
         const fileName = fileInput.files[0].name;
         uploadedFileNameInput.value = fileName;
@@ -61,13 +63,13 @@ document.addEventListener('DOMContentLoaded', function() {
     selectedPatternInput.value = selectedPattern;
 
     acceptBtn.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
         alert('Suggestion accepted: ' + selectedPattern);
         saveSuggestion('accepted');
     });
 
     denyBtn.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
         alert('Suggestion denied: ' + selectedPattern);
         saveSuggestion('denied');
     });
@@ -106,13 +108,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     acceptCorrectionBtn.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
         alert('Correction accepted');
         saveCorrection('accepted');
     });
 
     denyCorrectionBtn.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
         alert('Correction denied');
         saveCorrection('denied');
     });
@@ -120,8 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveCorrection(status) {
         const correctedText = document.querySelector('#correctionSuggestions pre').textContent;
         const imageName = uploadedFileNameInput.value;
-
-
 
         const correctionData = {
             status: status,
@@ -142,6 +142,43 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         }).then(data => {
             console.log('Correction saved:', data);
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+
+    tool1Btn.addEventListener('click', function() {
+        updatePatternWithThreshold(10);
+    });
+
+    tool2Btn.addEventListener('click', function() {
+        updatePatternWithThreshold(50);
+    });
+
+    tool3Btn.addEventListener('click', function() {
+        updatePatternWithThreshold(90);
+    });
+
+    function updatePatternWithThreshold(threshold) {
+        const ocrText = document.querySelector('pre').textContent;
+
+        fetch('/update_pattern_with_threshold', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ocr_text: ocrText, threshold: threshold })
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+            if (data.status === 'success') {
+                generatedPattern.textContent = `Generated Family Number Pattern: ${data.pattern}`;
+            } else {
+                alert('Error updating pattern: ' + data.message);
+            }
         }).catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });

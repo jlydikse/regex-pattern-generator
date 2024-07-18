@@ -7,16 +7,39 @@ def generate_basic_pattern(input_text):
     escaped_text = re.escape(input_text)
     return escaped_text
 
-def generate_fuzzy_pattern(input_text, threshold=90):
+
+typical_patterns = [
+    r'\d{4}\s',          # e.g., 1234 
+    r'\n<\d{3}>\s',      # e.g., <123> 
+    r'=\d{4}=\s',         # e.g., =1234= 
+    r'\d{3}\s|\n|\s+'    # e.g, 123 OR 123\n etc.
+
+
+
+
+]
+
+
+def generate_fuzzy_family_number_pattern(input_text, threshold=90):
     words = input_text.split()
     pattern = ''
     
     for word in words:
-        if fuzz.ratio(word, input_text) > threshold:
-            pattern += re.escape(word) + r'\s*'
+        best_match_ratio = 0
+        best_pattern = r'\w*\s*'  # Default pattern if no match is found
+        
+        for typical_pattern in typical_patterns:
+            cleaned_pattern = typical_pattern.replace(r'\s', '').replace(r'\d', '').replace('<', '').replace('>', '').replace('=', '')
+            match_ratio = fuzz.partial_ratio(word, cleaned_pattern)
+            if match_ratio > best_match_ratio:
+                best_match_ratio = match_ratio
+                best_pattern = typical_pattern
+        
+        if best_match_ratio > threshold:
+            pattern += best_pattern
         else:
             pattern += r'\w*\s*'
-
+    
     return pattern.strip()
 
 def cluster_texts(texts, n_clusters=2):
@@ -56,13 +79,13 @@ def longest_common_substring(texts):
 
     return longest_substring
 
-def generate_regex_patterns(text):
+def generate_regex_patterns(text, threshold=90):
     basic_pattern = generate_basic_pattern(text)
-    fuzzy_pattern = generate_fuzzy_pattern(text)
+    fuzzy_family_number_pattern = generate_fuzzy_family_number_pattern(text, threshold)
     advanced_patterns = generate_advanced_patterns(text)
     return {
         'basic_pattern': basic_pattern,
-        'fuzzy_pattern': fuzzy_pattern,
+        'fuzzy_family_number_pattern': fuzzy_family_number_pattern,
         'advanced_patterns': advanced_patterns
     }
 
