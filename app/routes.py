@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from app import app
 from app.ocr import perform_ocr
 from app.regex_generator import generate_regex_patterns, cluster_texts, generate_patterns_from_clusters
@@ -6,6 +6,7 @@ from app.error_correction import detect_and_correct_errors
 from app.correction_suggestion import *
 import os
 import re
+import json
 
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -69,12 +70,16 @@ def save_correction():
     # Define the file path
     file_path = "C:/Users/jlydi/OneDrive/Desktop/BYU-Idaho/CSE 499 Senior Project/RegexGeneratorProject/regex-pattern-generator/app/static/correctedTexts.txt"
 
+    if status != 'denied':
+
     # Write the correction to the file
-    with open(file_path, 'a', encoding='utf-8') as file:
-        file.write(f"Image= {image}, Corrected Text= {corrected_text}, Status= {status}\n")
+        with open(file_path, 'a', encoding='utf-8') as file:
+            file.write(f"Image= {image}, Corrected Text= {corrected_text}, Status= {status}\n")
 
-    print(f'Correction saved: Image={image}, Corrected Text={corrected_text}, Status={status}')
+        print(f'Correction saved: Image={image}, Corrected Text={corrected_text}, Status={status}')
 
+    else:
+        print("Denied Corrections, nothing written to file.")
     return jsonify(success=True)
 
 @app.route('/test_pattern', methods=['POST'])
@@ -115,6 +120,38 @@ def reevaluate_pattern_with_threshold(ocr_text, threshold):
     # Call the function to generate new patterns with the given threshold
     new_patterns = generate_regex_patterns(ocr_text, threshold)
     return new_patterns['fuzzy_family_number_pattern']  # Or choose the specific pattern you want to return
+
+
+
+
+@app.route('/save_suggestion', methods=['POST'])
+def save_suggestion_route():
+    suggestion_data = request.get_json()
+    success = save_suggestion(suggestion_data)
+    if success:
+        return jsonify({"status": "success"})
+    else:
+        return jsonify({"status": "error"}), 500
+
+@app.route('/submit_pattern', methods=['POST'])
+def submit_pattern():
+    pattern_data = request.get_json().get("regex")
+    image = session.get('uploaded_file_name', 'Unknown')  # Retrieve the file name from the session
+    # Define the file path
+    file_path = "C:/Users/jlydi/OneDrive/Desktop/BYU-Idaho/CSE 499 Senior Project/RegexGeneratorProject/regex-pattern-generator/app/static/approvedRegexPatterns.txt"
+    
+    # Write the suggestion to the file
+    with open(file_path, 'a', encoding='utf-8') as file:
+        file.write(f"Image= {image} Regex= {pattern_data}, Status= Submitted\n")
+
+    # Implement your logic to save the suggestion
+    print(f'Suggestion saved: Image={image}, Regex={pattern_data}, Status=Submitted')
+
+    return jsonify(success=True)
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

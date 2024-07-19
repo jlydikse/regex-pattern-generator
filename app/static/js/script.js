@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const tool1Btn = document.getElementById('tool1Btn');
     const tool2Btn = document.getElementById('tool2Btn');
     const tool3Btn = document.getElementById('tool3Btn');
+    const submitPatternBtn = document.getElementById('submitPatternBtn');
 
     fileInput.addEventListener('change', function() {
         const fileName = fileInput.files[0].name;
@@ -102,10 +103,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    editPatternBtn.addEventListener('click', function() {
-        const newPattern = patternTextarea.value;
-        generatedPattern.textContent = newPattern;
+    submitPatternBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        const newPattern = patternTextarea.value.trim();
+        if (newPattern) {
+            alert('New regex pattern submitted: ' + newPattern);
+            submitNewPattern(newPattern);
+        } else {
+            alert('Please enter a valid regex pattern.');
+        }
     });
+
+    function submitNewPattern(pattern) {
+        const imageName = uploadedFileNameInput.value.trim();
+
+        const patternData = {
+            image: imageName,
+            regex: pattern,
+            status: 'submitted'  // Assuming 'submitted' is the status we want to save
+        };
+
+        fetch('/submit_pattern', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(patternData)
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+            console.log('Pattern submitted:', data);
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
 
     acceptCorrectionBtn.addEventListener('click', function(event) {
         event.preventDefault();

@@ -97,8 +97,11 @@
         <section id="editPatternSection">
             <h2>Edit Pattern</h2>
             <textarea id="patternTextarea"></textarea>
-            <button id="editPatternBtn">Edit Pattern</button>
+            <button id="submitPatternBtn">Submit Pattern</button>
         </section>
+
+        <input type="hidden" id="uploadedFileName" name="uploadedFileName">
+
 
         <section class="errors">
             {% if errors %}

@@ -1,2 +1,41 @@
-Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
 Image= page 300.png Regex= [A-Z][a-z]+(\s[A-Z][a-z]+)*(\s[A-Z]\.)?, Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page 300.png Regex= [A-Z][a-z]+(\s[A-Z][a-z]+)*(\s[A-Z]\.)?, Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+{"image": "", "regex": "\\n(\\d{4})\\s+?((?:.|[\\n])*?)(?=\\n\\d{12})"}
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+{"image": "", "regex": "\\n(\\d{4})\\s+?((?:.|[\\n])*?)(?=\\n\\d{12})"}
+{"image": "", "regex": "\\n(\\d{4})\\s+?((?:.|[\\n])*?)(?=\\n\\d{17})", "status": "submitted"}
+{"image": "", "regex": "\\n(\\d{4})\\s+?((?:.|[\\n])*?)(?=\\n\\d{15})", "status": "submitted"}
+Image= page_29.png Regex= {'image': '', 'regex': '\\n(\\d{4})\\s+?((?:.|[\\n])*?)(?=\\n\\d{119})', 'status': 'submitted'}, Status= Submitted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{1234}), Status= Submitted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{1734}), Status= Submitted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= denied
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{9876}), Status= Submitted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
+Image= page_29.png Regex= \n(\d{4})\s+?((?:.|[\n])*?)(?=\n\d{4}), Status= accepted
